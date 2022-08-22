@@ -1,9 +1,7 @@
 <?php
 
+namespace Fastbolt\SonataAdminProtectedFields\EventSubscriber;
 
-namespace EventSubscriber;
-
-use App\Security\EntityProtectionInterface;
 use Sonata\AdminBundle\Event\ConfigureEvent;
 use Sonata\AdminBundle\Mapper\MapperInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

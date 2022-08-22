@@ -1,8 +1,7 @@
 <?php
 
-namespace Annotations;
+namespace Fastbolt\SonataAdminProtectedFields\Mapping\Annotations;
 
-use Annotations\Annotation;
 use Attribute;
 use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
 

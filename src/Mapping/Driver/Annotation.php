@@ -1,10 +1,9 @@
 <?php
 
-namespace Annotations\Driver;
+namespace Fastbolt\SonataAdminProtectedFields\Mapping\Driver;
 
-use Annotations\DeleteProtected;
-use Annotations\WriteProtected;
-use Gedmo\Mapping\Driver\AbstractAnnotationDriver;
+use Fastbolt\SonataAdminProtectedFields\Mapping\Annotations\DeleteProtected;
+use Fastbolt\SonataAdminProtectedFields\Mapping\Annotations\WriteProtected;
 
 class Annotation extends AbstractAnnotationDriver
 {

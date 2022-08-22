@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Annotations;
+namespace Fastbolt\SonataAdminProtectedFields\Mapping\Annotations;
 
 /**
  * @internal
