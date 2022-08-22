@@ -1,0 +1,10 @@
+services:
+
+    Fastbolt\SonataAdminProtectedFields\EventSubscriber\FormProtectingEventSubscriber:
+        tags: [ "kernel.event_subscriber" ]
+        arguments:
+            $driver: '@Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AnnotationDriver'
+
+
+    Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AnnotationDriver:
+        $debug: '%kernel.debug%'

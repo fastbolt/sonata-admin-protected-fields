@@ -2,18 +2,25 @@
 
 namespace Fastbolt\SonataAdminProtectedFields\EventSubscriber;
 
+use Exception;
+use Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AnnotationDriver;
 use Sonata\AdminBundle\Event\ConfigureEvent;
 use Sonata\AdminBundle\Mapper\MapperInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormEvents;
 
 class FormProtectingEventSubscriber implements EventSubscriberInterface
 {
+    private AnnotationDriver $driver;
+
+    public function __construct(AnnotationDriver $driver)
+    {
+        $this->driver = $driver;
+    }
+
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::PRE_SET_DATA            => 'preSetData',
             'sonata.admin.event.configure.form' => 'configureForm',
         ];
     }
@@ -27,11 +34,8 @@ class FormProtectingEventSubscriber implements EventSubscriberInterface
 
         $admin      = $event->getAdmin();
         $modelClass = $admin->getModelClass();
-        if (!is_subclass_of($modelClass, EntityProtectionInterface::class)) {
-            return;
-        }
 
-        foreach ($modelClass::getProtectedFields() as $field) {
+        foreach ($this->getProtectedFields($modelClass) as $field) {
             $this->protect($mapper, $field);
         }
     }
@@ -51,5 +55,12 @@ class FormProtectingEventSubscriber implements EventSubscriberInterface
         /** @var FormBuilder $field */
         $field = $mapper->get($fieldName);
         $field->setDisabled(true);
+    }
+
+    private function getProtectedFields(string $modelClass)
+    {
+        dd($this->driver->getProtectedFields($modelClass));
+
+        throw new Exception('Not implemented');
     }
 }
