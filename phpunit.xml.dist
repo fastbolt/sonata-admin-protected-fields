@@ -13,7 +13,7 @@
             <directory>./src/</directory>
         </include>
         <report>
-            <html outputDirectory="var/coverage/"/>
+            <html outputDirectory="coverage/"/>
         </report>
     </coverage>
 
