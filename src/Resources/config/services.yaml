@@ -1,9 +1,5 @@
 services:
 
-    _instanceof:
-        Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker:
-            tags: [ 'sonata_admin_protected_fields.field_protectors' ]
-
     Fastbolt\SonataAdminProtectedFields\EventSubscriber\FormProtectingEventSubscriber:
         tags: [ "kernel.event_subscriber" ]
         arguments:
@@ -17,5 +13,12 @@ services:
     Fastbolt\SonataAdminProtectedFields\Protection\DefaultProtector:
         arguments:
             $fieldProvider: '@Fastbolt\SonataAdminProtectedFields\Form\FormFieldProvider'
-            $checkers: !tagged sonata_admin_protected_fields.field_protectors
 
+    Fastbolt\SonataAdminProtectedFields\Protection\Checker\PropertyProtectionChecker:
+        tags:
+            - 'sonata_admin_protected_fields.protection_checkers'
+
+    Fastbolt\SonataAdminProtectedFields\Protection\EntitySecurityHandler\ProtectingSecurityHandler:
+        arguments:
+            $parent: '@sonata.admin.security.handler.role'
+            $driver: '@Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver'

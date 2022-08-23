@@ -37,4 +37,14 @@ class AttributeDriver
 
         return $protectedFields;
     }
+
+    public function getDeleteProtection(string $modelClass): ?DeleteProtected
+    {
+        $reflectionClass = new ReflectionClass($modelClass);
+        if (0 === count($attributes = $reflectionClass->getAttributes(self::DELETE_PROTECTED))) {
+            return null;
+        }
+
+        return end($attributes)->newInstance();
+    }
 }

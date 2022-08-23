@@ -8,6 +8,5 @@
 # composer lock file
 composer.lock
 
-# cache directory
-var/
+coverage/
 .phpunit.result.cache

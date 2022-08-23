@@ -8,12 +8,10 @@ use Fastbolt\SonataAdminProtectedFields\Protection\Checker\PropertyProtectionChe
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class WriteProtected
 {
-    private string $checker;
-
-    public function __construct(string $checker = PropertyProtectionChecker::class, bool $throwOnMissing = true)
-    {
-        $this->checker        = $checker;
-        $this->throwOnMissing = $throwOnMissing;
+    public function __construct(
+        private readonly string $checker = PropertyProtectionChecker::class,
+        private readonly bool $throwOnMissing = true
+    ) {
     }
 
     public function getChecker(): string
