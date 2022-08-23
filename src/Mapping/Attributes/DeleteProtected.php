@@ -8,9 +8,8 @@ use Fastbolt\SonataAdminProtectedFields\Protection\Checker\PropertyProtectionChe
 #[Attribute(Attribute::TARGET_CLASS)]
 class DeleteProtected
 {
-    public function __construct(
-        private readonly string $checker = PropertyProtectionChecker::class
-    ) {
+    public function __construct(private string $checker = PropertyProtectionChecker::class)
+    {
     }
 
     public function getChecker(): string

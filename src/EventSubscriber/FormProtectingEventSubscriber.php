@@ -14,7 +14,7 @@ class FormProtectingEventSubscriber implements EventSubscriberInterface
     {
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'sonata.admin.event.configure.form' => 'configureForm',
@@ -23,7 +23,6 @@ class FormProtectingEventSubscriber implements EventSubscriberInterface
 
     public function configureForm(ConfigureEvent $event): void
     {
-        /** @var FormMapper $mapper */
         $mapper     = $event->getMapper();
         $admin      = $event->getAdmin();
         $modelClass = $admin->getModelClass();

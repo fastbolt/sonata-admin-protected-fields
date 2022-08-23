@@ -4,7 +4,7 @@ namespace Fastbolt\SonataAdminProtectedFields\Form;
 
 use Fastbolt\SonataAdminProtectedFields\Exception\FieldNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
-use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Mapper\MapperInterface;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -12,7 +12,7 @@ class FormFieldProvider
 {
 
     public function getFormField(
-        FormMapper $mapper,
+        MapperInterface $mapper,
         string $fieldName,
         WriteProtected $writeProtected
     ): ?FormBuilderInterface {
@@ -34,7 +34,7 @@ class FormFieldProvider
         throw FieldNotFoundException::create($fieldName, $modelClass);
     }
 
-    private function getFieldDefinition(FormMapper $mapper, string $fieldName): ?FormBuilderInterface
+    private function getFieldDefinition(MapperInterface $mapper, string $fieldName): ?FormBuilderInterface
     {
         $fields = $mapper->getFormBuilder()
                          ->all();

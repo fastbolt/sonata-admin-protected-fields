@@ -17,8 +17,8 @@
         }
     ],
     "require" : {
-        "php": "^8.0|^8.1",
-        "sonata-project/admin-bundle": "^4.9"
+        "php" : "^8.0|^8.1",
+        "sonata-project/admin-bundle" : "^4.9"
     },
     "require-dev" : {
         "fastbolt/test-helpers" : "^0.1.1",
