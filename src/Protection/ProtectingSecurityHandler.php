@@ -1,6 +1,6 @@
 <?php
 
-namespace Fastbolt\SonataAdminProtectedFields\Protector;
+namespace Fastbolt\SonataAdminProtectedFields\Protection;
 
 use EntityProtectionInterface;
 use Sonata\AdminBundle\Admin\AdminInterface;

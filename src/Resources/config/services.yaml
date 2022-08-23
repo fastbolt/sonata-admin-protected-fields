@@ -1,10 +1,21 @@
 services:
 
+    _instanceof:
+        Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker:
+            tags: [ 'sonata_admin_protected_fields.field_protectors' ]
+
     Fastbolt\SonataAdminProtectedFields\EventSubscriber\FormProtectingEventSubscriber:
         tags: [ "kernel.event_subscriber" ]
         arguments:
-            $driver: '@Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AnnotationDriver'
+            $driver: '@Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver'
+            $protector: '@Fastbolt\SonataAdminProtectedFields\Protection\DefaultProtector'
 
+    Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver:
 
-    Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AnnotationDriver:
-        $debug: '%kernel.debug%'
+    Fastbolt\SonataAdminProtectedFields\Form\FormFieldProvider:
+
+    Fastbolt\SonataAdminProtectedFields\Protection\DefaultProtector:
+        arguments:
+            $fieldProvider: '@Fastbolt\SonataAdminProtectedFields\Form\FormFieldProvider'
+            $checkers: !tagged sonata_admin_protected_fields.field_protectors
+
