@@ -18,7 +18,7 @@ In addition, the same checks can be used to protect entities from being deleted 
 
 The system relies on the `Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker` interface which has access to all entity properties.
 
-For custom implementation, please head to the [Implementing custom checkers](#-implementing-custom-checkers) section.
+For custom implementation, please head to the [Implementing custom checkers](#implementing-custom-checkers) section.
 
 ## Prerequisites
 
@@ -83,7 +83,7 @@ To enable dynamic delete protection, just add the corresponding attribute to you
 class Material
 ```
 
-The protection checks use the same mechanism as outlined in the [Field protection](#-field-protection) section.
+The protection checks use the same mechanism as outlined in the [Field protection](#field-protection) section.
 
 ## Implementing custom checkers
 
