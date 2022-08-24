@@ -11,12 +11,11 @@ namespace Fastbolt\SonataAdminProtectedFields\Tests\Unit\Protection\EntitySecuri
 use Fastbolt\SonataAdminProtectedFields\Exception\CheckerNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\DeleteProtected;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver;
-use Fastbolt\SonataAdminProtectedFields\Protection\Checker\PropertyProtectionChecker;
+use Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker;
 use Fastbolt\SonataAdminProtectedFields\Protection\EntitySecurityHandler\ProtectingSecurityHandler;
 use Fastbolt\TestHelpers\BaseTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Security\Handler\RoleSecurityHandler;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 use stdClass;
 
@@ -26,7 +25,7 @@ use stdClass;
 class ProtectingSecurityHandlerTest extends BaseTestCase
 {
     /**
-     * @var RoleSecurityHandler&MockObject
+     * @var SecurityHandlerInterface&MockObject
      */
     private $parent;
 
@@ -36,7 +35,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
     private $driver;
 
     /**
-     * @var PropertyProtectionChecker&MockObject
+     * @var Checker&MockObject
      */
     private $checker;
 
@@ -45,7 +44,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
      */
     private $admin;
 
-    public function testGetBaseRoleParent()
+    public function testGetBaseRoleParent(): void
     {
         $handler = new ProtectingSecurityHandler($this->parent, $this->driver, [$this->checker]);
 
@@ -58,20 +57,20 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertSame('fooBaseRole', $result);
     }
 
-    public function testBuildSecurityInformationParent()
+    public function testBuildSecurityInformationParent(): void
     {
         $handler = new ProtectingSecurityHandler($this->parent, $this->driver, [$this->checker]);
 
         $this->parent->expects(self::once())
                      ->method('buildSecurityInformation')
                      ->with($this->admin)
-                     ->willReturn($info = ['foo', 'bar', 'array' => 1]);
+                     ->willReturn($info = ['foo' => ['foo1'], 'bar' => ['bar2'], 'array' => ['arr3']]);
         $result = $handler->buildSecurityInformation($this->admin);
 
         self::assertSame($info, $result);
     }
 
-    public function testCreateObjectSecurityParent()
+    public function testCreateObjectSecurityParent(): void
     {
         $handler = new ProtectingSecurityHandler($this->parent, $this->driver, [$this->checker]);
         $object  = new stdClass();
@@ -81,7 +80,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         $handler->createObjectSecurity($this->admin, $object);
     }
 
-    public function testDeleteObjectSecurityParent()
+    public function testDeleteObjectSecurityParent(): void
     {
         $handler = new ProtectingSecurityHandler($this->parent, $this->driver, [$this->checker]);
         $object  = new stdClass();
@@ -91,7 +90,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         $handler->deleteObjectSecurity($this->admin, $object);
     }
 
-    public function testIsGrantedParentReturnsFalse()
+    public function testIsGrantedParentReturnsFalse(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -109,7 +108,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertFalse($result);
     }
 
-    public function testIsGrantedNoObject()
+    public function testIsGrantedNoObject(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -126,7 +125,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertTrue($result);
     }
 
-    public function testIsGrantedWrongAttribute()
+    public function testIsGrantedWrongAttribute(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -143,7 +142,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertTrue($result);
     }
 
-    public function testIsGrantedNoDeleteProtection()
+    public function testIsGrantedNoDeleteProtection(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -162,7 +161,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertTrue($result);
     }
 
-    public function testIsGrantedWithDeleteProtectionShouldBeProtected()
+    public function testIsGrantedWithDeleteProtectionShouldBeProtected(): void
     {
         $object = new stdClass();
         $this->checker->expects(self::once())
@@ -183,7 +182,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertFalse($result);
     }
 
-    public function testIsGrantedWithDeleteProtectionShouldNotBeProtected()
+    public function testIsGrantedWithDeleteProtectionShouldNotBeProtected(): void
     {
         $object = new stdClass();
         $this->checker->expects(self::once())
@@ -204,7 +203,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
         self::assertTrue($result);
     }
 
-    public function testIsGrantedWithDeleteProtectionCheckerNotFound()
+    public function testIsGrantedWithDeleteProtectionCheckerNotFound(): void
     {
         $object = new stdClass();
         $this->checker->expects(self::never())
@@ -229,7 +228,7 @@ class ProtectingSecurityHandlerTest extends BaseTestCase
     {
         $this->parent  = $this->createMock(SecurityHandlerInterface::class);
         $this->driver  = $this->createMock(AttributeDriver::class);
-        $this->checker = $this->createMock(PropertyProtectionChecker::class);
+        $this->checker = $this->createMock(Checker::class);
         $this->checker->method('getName')
                       ->willReturn('fooChecker');
         $this->admin = $this->getMock(AdminInterface::class);

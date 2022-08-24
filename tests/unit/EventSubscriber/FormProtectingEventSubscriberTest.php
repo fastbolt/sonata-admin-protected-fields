@@ -45,6 +45,11 @@ class FormProtectingEventSubscriberTest extends BaseTestCase
      */
     private $formContractor;
 
+    /**
+     * @var FormBuilder&MockObject
+     */
+    private $builder;
+
     public function testGetSubscribedEvents(): void
     {
         $this->assertEquals(
@@ -60,14 +65,14 @@ class FormProtectingEventSubscriberTest extends BaseTestCase
         $mapper     = new FormMapper($this->formContractor, $this->builder, $this->admin);
         $event      = new ConfigureEvent($this->admin, $mapper, '\App\Foo\BarAdmin');
         $subscriber = new FormProtectingEventSubscriber($this->driver, $this->protector);
-        $subject    = $this->getMock(stdClass::class, [], ['isProtected'], 'fooBarType');
+        $subject    = $this->getMock(stdClass::class, [], ['isProtected']);
         $subject->method('isProtected')
                 ->willReturn(false);
-        $this->admin->setModelClass('fooBarType');
+        $this->admin->setModelClass(stdClass::class);
         $this->admin->setSubject($subject);
         $this->driver->expects(self::once())
                      ->method('getProtectedFields')
-                     ->with('fooBarType')
+                     ->with(stdClass::class)
                      ->willReturn($fields = ['foo', 'bar']);
 
         $this->protector->expects(self::once())

@@ -14,6 +14,9 @@ use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
 #[DeleteProtected]
 class ClassWithProtectedFieldsAndDeleteProtection
 {
+    /**
+     * @psalm-suppress UndefinedAttributeClass
+     */
     public function __construct(
         #[WriteProtected] private bool $propProtected,
         private bool $propUnprotected,

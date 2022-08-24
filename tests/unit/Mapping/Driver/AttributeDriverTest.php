@@ -19,7 +19,7 @@ use Fastbolt\TestHelpers\BaseTestCase;
  */
 class AttributeDriverTest extends BaseTestCase
 {
-    public function testGetProtectedFields()
+    public function testGetProtectedFields(): void
     {
         $driver = new AttributeDriver();
 
@@ -29,7 +29,7 @@ class AttributeDriverTest extends BaseTestCase
         self::assertSame(['propProtected', 'prop2Protected'], array_keys($result));
     }
 
-    public function testDeleteProtectionProtected()
+    public function testDeleteProtectionProtected(): void
     {
         $driver = new AttributeDriver();
 
@@ -38,7 +38,7 @@ class AttributeDriverTest extends BaseTestCase
         self::assertInstanceOf(DeleteProtected::class, $result);
     }
 
-    public function testDeleteProtectionNotProtected()
+    public function testDeleteProtectionNotProtected(): void
     {
         $driver = new AttributeDriver();
 

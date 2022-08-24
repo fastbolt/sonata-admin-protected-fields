@@ -29,11 +29,11 @@ class SonataAdminProtectedFieldsExtension extends Extension
         self::configureSecurityHandler($container);
     }
 
-    private static function configureCheckers(ContainerBuilder $container)
+    private static function configureCheckers(ContainerBuilder $container): void
     {
         $checkerIds = $container->findTaggedServiceIds('sonata_admin_protected_fields.protection_checkers');
         $checkers   = [];
-        foreach ($checkerIds as $checkerId => $tags) {
+        foreach (array_keys($checkerIds) as $checkerId) {
             $checkers[] = $container->findDefinition($checkerId);
         }
 
@@ -44,11 +44,12 @@ class SonataAdminProtectedFieldsExtension extends Extension
         $definition->setArgument('$checkers', $checkers);
     }
 
-    private static function configureSecurityHandler(ContainerBuilder $container)
+    private static function configureSecurityHandler(ContainerBuilder $container): void
     {
+        /** @var array<string,class-string|null> $configuration */
         $configuration                     = $container->getParameter(
             'sonata.admin.configuration.default_admin_services'
-        );
+        ) ?? [];
         $configuration['security_handler'] = ProtectingSecurityHandler::class;
 
         $container->setParameter('sonata.admin.configuration.default_admin_services', $configuration);

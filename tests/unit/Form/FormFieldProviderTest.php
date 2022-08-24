@@ -45,7 +45,7 @@ class FormFieldProviderTest extends BaseTestCase
      */
     private FormMapper $mapper;
 
-    public function testGetFormFieldHasField()
+    public function testGetFormFieldHasField(): void
     {
         $writeProtected = $this->getMock(WriteProtected::class);
         $field          = $this->getMock(FormBuilder::class);
@@ -62,7 +62,7 @@ class FormFieldProviderTest extends BaseTestCase
         self::assertSame($field, $result);
     }
 
-    public function testGetFormFieldUnknownDontThrow()
+    public function testGetFormFieldUnknownDontThrow(): void
     {
         $writeProtected = $this->getMock(WriteProtected::class);
         $writeProtected->method('getThrowOnMissing')
@@ -82,7 +82,7 @@ class FormFieldProviderTest extends BaseTestCase
         self::assertNull($result);
     }
 
-    public function testGetFormFieldUnknownThrow()
+    public function testGetFormFieldUnknownThrow(): void
     {
         $writeProtected = $this->getMock(WriteProtected::class);
         $writeProtected->method('getThrowOnMissing')
@@ -105,7 +105,7 @@ class FormFieldProviderTest extends BaseTestCase
         $provider->getFormField($this->mapper, 'fooChild', $writeProtected);
     }
 
-    public function testGetFormFieldHasChildField()
+    public function testGetFormFieldHasChildField(): void
     {
         $writeProtected = $this->getMock(WriteProtected::class);
         $fields         = [

@@ -57,7 +57,12 @@ class DefaultProtectorTest extends BaseTestCase
      */
     private FormMapper $mapper;
 
-    public function testNoFormField()
+    /**
+     * @var stdClass&MockObject
+     */
+    private $object;
+
+    public function testNoFormField(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -78,7 +83,7 @@ class DefaultProtectorTest extends BaseTestCase
         $protector->protectForm($this->mapper, $fields, $this->object);
     }
 
-    public function testCheckerNotFound()
+    public function testCheckerNotFound(): void
     {
         $this->checker->expects(self::never())
                       ->method('shouldBeProtected');
@@ -101,13 +106,13 @@ class DefaultProtectorTest extends BaseTestCase
         $protector->protectForm($this->mapper, $fields, $this->object);
     }
 
-    public function testOneFieldProtected()
+    public function testOneFieldProtected(): void
     {
         $this->checker->expects(self::exactly(2))
                       ->method('shouldBeProtected')
                       ->withConsecutive(
-                          [$object1 = $this->getMock(stdClass::class)],
-                          [$object2 = $this->getMock(stdClass::class)],
+                          [$this->getMock(stdClass::class)],
+                          [$this->getMock(stdClass::class)],
                       )
                       ->willReturnOnConsecutiveCalls(true, false);
         $configs = [
