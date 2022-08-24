@@ -20,10 +20,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@master
-
-            -   name: Psalm
-                uses: docker://vimeo/psalm-github-actions
+            -   uses: shivammathur/setup-php@v2
                 with:
-                    args: --shepherd
-                    composer_require_dev: true
-                    composer_ignore_platform_reqs: true
+                    php-version: '8.0'
+            - name: Install dependencies
+              run: composer install --prefer-dist --no-progress --no-suggest
+              env:
+                  COMPOSER_ROOT_VERSION: dev-master
+            - name: Run Psalm
+              run: ./psalm --threads=2 --output-format=github --shepherd
