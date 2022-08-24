@@ -10,7 +10,6 @@ namespace Fastbolt\SonataAdminProtectedFields\Mapping\Driver;
 
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\DeleteProtected;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
-use ReflectionAttribute;
 use ReflectionClass;
 
 class AttributeDriver
@@ -25,6 +24,11 @@ class AttributeDriver
      */
     public const DELETE_PROTECTED = DeleteProtected::class;
 
+    /**
+     * @param class-string $modelClass
+     *
+     * @return array<string,WriteProtected>
+     */
     public function getProtectedFields(string $modelClass): array
     {
         $reflectionClass = new ReflectionClass($modelClass);
@@ -35,16 +39,18 @@ class AttributeDriver
             if (0 === count($attributes)) {
                 continue;
             }
-            $name = $property->getName();
-            /** @var ReflectionAttribute $attr */
-            $attr = end($attributes);
-
-            $protectedFields[$name] = $attr->newInstance();
+            $name                   = $property->getName();
+            $protectedFields[$name] = $attributes[0]->newInstance();
         }
 
         return $protectedFields;
     }
 
+    /**
+     * @param class-string $modelClass
+     *
+     * @return DeleteProtected|null
+     */
     public function getDeleteProtection(string $modelClass): ?DeleteProtected
     {
         $reflectionClass = new ReflectionClass($modelClass);
@@ -52,6 +58,6 @@ class AttributeDriver
             return null;
         }
 
-        return end($attributes)->newInstance();
+        return $attributes[0]->newInstance();
     }
 }

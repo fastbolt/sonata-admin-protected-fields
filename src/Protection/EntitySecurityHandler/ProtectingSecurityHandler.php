@@ -26,7 +26,7 @@ class ProtectingSecurityHandler implements SecurityHandlerInterface
     private array $checkers = [];
 
     /**
-     * @param array<string,Checker> $checkers
+     * @param array<Checker> $checkers
      */
     public function __construct(
         SecurityHandlerInterface $parent,

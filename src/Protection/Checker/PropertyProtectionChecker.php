@@ -8,6 +8,8 @@
 
 namespace Fastbolt\SonataAdminProtectedFields\Protection\Checker;
 
+use Fastbolt\SonataAdminProtectedFields\Exception\MethodNotFoundException;
+
 /**
  * @Todo We might want to make this thing more configurable at a later time.
  *       The method {@link PropertyProtectionChecker::shouldBeProtected} should then receive
@@ -17,9 +19,13 @@ class PropertyProtectionChecker implements Checker
 {
     public const NAME = 'PropertyProtectionChecker';
 
-    public function shouldBeProtected($item): bool
+    public function shouldBeProtected(object $item): bool
     {
-        return $item->isProtected();
+        if (!method_exists($item, 'isProtected')) {
+            throw MethodNotFoundException::create('isProtected', get_class($item));
+        }
+
+        return $item->isProtected() === true;
     }
 
     public function getName(): string

@@ -12,5 +12,5 @@ interface Checker
 {
     public function getName(): string;
 
-    public function shouldBeProtected($item): bool;
+    public function shouldBeProtected(object $item): bool;
 }

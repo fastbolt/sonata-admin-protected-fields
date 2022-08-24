@@ -24,7 +24,7 @@ class DefaultProtector
     private FormFieldProvider $formFieldProvider;
 
     /**
-     * @param array<string,Checker> $checkers
+     * @param array<Checker> $checkers
      */
     public function __construct(
         FormFieldProvider $fieldProvider,
@@ -37,7 +37,15 @@ class DefaultProtector
         }
     }
 
-    public function protectForm(FormMapper $mapper, iterable $protectedFields, object $object): void
+    /**
+     * @param FormMapper           $mapper
+     * @param array<string,WriteProtected> $protectedFields
+     * @param object               $object
+     *
+     * @return void
+     * @throws CheckerNotFoundException
+     */
+    public function protectForm(FormMapper $mapper, array $protectedFields, object $object): void
     {
         foreach ($protectedFields as $fieldName => $configuration) {
             $this->protectField($mapper, $fieldName, $configuration, $object);

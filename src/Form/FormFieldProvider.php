@@ -51,7 +51,7 @@ class FormFieldProvider
 
         foreach ($fieldsFiltered as $field) {
             $path = $field->getPropertyPath();
-            if ($path->getElement(0) === $fieldName) {
+            if (null !== $path && $path->getElement(0) === $fieldName) {
                 return $field;
             }
         }
