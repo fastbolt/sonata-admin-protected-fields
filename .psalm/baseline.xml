@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
+  <file src="src/DependencyInjection/SonataAdminProtectedFieldsExtension.php">
+    <MissingReturnType occurrences="2">
+      <code>configureCheckers</code>
+      <code>configureSecurityHandler</code>
+    </MissingReturnType>
+    <PossiblyInvalidArrayAssignment occurrences="1">
+      <code>$configuration['security_handler']</code>
+    </PossiblyInvalidArrayAssignment>
+    <PossiblyNullReference occurrences="1">
+      <code>$configuration</code>
+    </PossiblyNullReference>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>$configuration</code>
+    </UndefinedInterfaceMethod>
+    <UnusedForeachValue occurrences="1">
+      <code>$tags</code>
+    </UnusedForeachValue>
+  </file>
+  <file src="src/EventSubscriber/FormProtectingEventSubscriber.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$mapper</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Form/FormFieldProvider.php">
+    <PossiblyNullReference occurrences="1">
+      <code>getElement</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="src/Mapping/Driver/AttributeDriver.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$modelClass</code>
+      <code>$modelClass</code>
+    </ArgumentTypeCoercion>
+  </file>
+  <file src="src/Protection/Checker/Checker.php">
+    <MissingParamType occurrences="1">
+      <code>$item</code>
+    </MissingParamType>
+  </file>
+  <file src="src/Protection/Checker/PropertyProtectionChecker.php">
+    <MissingParamType occurrences="1">
+      <code>$item</code>
+    </MissingParamType>
+    <MixedInferredReturnType occurrences="1">
+      <code>bool</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="1">
+      <code>isProtected</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$item-&gt;isProtected()</code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Protection/DefaultProtector.php">
+    <MixedArgument occurrences="2">
+      <code>$configuration</code>
+      <code>$fieldName</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="2">
+      <code>$configuration</code>
+      <code>$fieldName</code>
+    </MixedAssignment>
+  </file>
+  <file src="tests/unit/EventSubscriber/FormProtectingEventSubscriberTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'fooBarType'</code>
+    </ArgumentTypeCoercion>
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;builder</code>
+    </MixedArgument>
+    <UndefinedClass occurrences="1">
+      <code>'fooBarType'</code>
+    </UndefinedClass>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;builder</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="1">
+      <code>$this-&gt;builder</code>
+    </UndefinedThisPropertyFetch>
+  </file>
+  <file src="tests/unit/Form/FormFieldProviderTest.php">
+    <MissingReturnType occurrences="4">
+      <code>testGetFormFieldHasChildField</code>
+      <code>testGetFormFieldHasField</code>
+      <code>testGetFormFieldUnknownDontThrow</code>
+      <code>testGetFormFieldUnknownThrow</code>
+    </MissingReturnType>
+  </file>
+  <file src="tests/unit/Mapping/Driver/AttributeDriverTest.php">
+    <MissingReturnType occurrences="3">
+      <code>testDeleteProtectionNotProtected</code>
+      <code>testDeleteProtectionProtected</code>
+      <code>testGetProtectedFields</code>
+    </MissingReturnType>
+  </file>
+  <file src="tests/unit/Protection/DefaultProtectorTest.php">
+    <InvalidScalarArgument occurrences="3"/>
+    <MissingReturnType occurrences="3">
+      <code>testCheckerNotFound</code>
+      <code>testNoFormField</code>
+      <code>testOneFieldProtected</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="3">
+      <code>$this-&gt;object</code>
+      <code>$this-&gt;object</code>
+      <code>$this-&gt;object</code>
+    </MixedArgument>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;object</code>
+    </UndefinedThisPropertyAssignment>
+    <UndefinedThisPropertyFetch occurrences="3">
+      <code>$this-&gt;object</code>
+      <code>$this-&gt;object</code>
+      <code>$this-&gt;object</code>
+    </UndefinedThisPropertyFetch>
+    <UnusedVariable occurrences="2">
+      <code>$object1</code>
+      <code>$object2</code>
+    </UnusedVariable>
+  </file>
+  <file src="tests/unit/Protection/EntitySecurityHandler/ProtectingSecurityHandlerTest.php">
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;createMock(SecurityHandlerInterface::class)</code>
+    </InvalidPropertyAssignmentValue>
+    <InvalidScalarArgument occurrences="11">
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+      <code>[$this-&gt;checker]</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="11">
+      <code>testBuildSecurityInformationParent</code>
+      <code>testCreateObjectSecurityParent</code>
+      <code>testDeleteObjectSecurityParent</code>
+      <code>testGetBaseRoleParent</code>
+      <code>testIsGrantedNoDeleteProtection</code>
+      <code>testIsGrantedNoObject</code>
+      <code>testIsGrantedParentReturnsFalse</code>
+      <code>testIsGrantedWithDeleteProtectionCheckerNotFound</code>
+      <code>testIsGrantedWithDeleteProtectionShouldBeProtected</code>
+      <code>testIsGrantedWithDeleteProtectionShouldNotBeProtected</code>
+      <code>testIsGrantedWrongAttribute</code>
+    </MissingReturnType>
+    <TypeDoesNotContainType occurrences="1">
+      <code>assertSame</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="tests/unit/_Fixtures/Mapping/ClassWithProtectedFields.php">
+    <UndefinedAttributeClass occurrences="1">
+      <code>SomeUnknownAttribute</code>
+    </UndefinedAttributeClass>
+  </file>
+  <file src="tests/unit/_Fixtures/Mapping/ClassWithProtectedFieldsAndDeleteProtection.php">
+    <UndefinedAttributeClass occurrences="1">
+      <code>SomeUnknownAttribute</code>
+    </UndefinedAttributeClass>
+  </file>
+</files>
