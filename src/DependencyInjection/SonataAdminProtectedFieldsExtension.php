@@ -46,6 +46,7 @@ class SonataAdminProtectedFieldsExtension extends Extension
 
     private static function configureSecurityHandler(ContainerBuilder $container): void
     {
+        /** @psalm-suppress UndefinedDocblockClass */
         /** @var array<string,class-string|null> $configuration */
         $configuration                     = $container->getParameter(
             'sonata.admin.configuration.default_admin_services'
