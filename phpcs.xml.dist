@@ -58,8 +58,5 @@
 	    </properties>
 	</rule>
 
-    <rule ref="Spryker.Commenting.DocBlock">
-        <exclude-pattern>tests/</exclude-pattern>
-    </rule>
     <rule ref="Spryker.Commenting.FileDocBlock"/>
 </ruleset>

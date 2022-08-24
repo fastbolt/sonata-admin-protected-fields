@@ -28,8 +28,4 @@
     <fileExtensions>
         <extension name=".php"/>
     </fileExtensions>
-
-    <plugins>
-        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
-    </plugins>
 </psalm>

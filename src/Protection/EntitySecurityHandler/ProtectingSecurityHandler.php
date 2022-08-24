@@ -10,7 +10,6 @@ use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 
 class ProtectingSecurityHandler implements SecurityHandlerInterface
 {
-
     private SecurityHandlerInterface $parent;
 
     private AttributeDriver $driver;

@@ -5,7 +5,6 @@ namespace Fastbolt\SonataAdminProtectedFields\Form;
 use Fastbolt\SonataAdminProtectedFields\Exception\FieldNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
 use Sonata\AdminBundle\Form\FormMapper;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FormFieldProvider
