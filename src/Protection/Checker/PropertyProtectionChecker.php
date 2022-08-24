@@ -9,8 +9,15 @@ namespace Fastbolt\SonataAdminProtectedFields\Protection\Checker;
  */
 class PropertyProtectionChecker implements Checker
 {
-    public function shouldBeProtected($item)
+    public const NAME = 'PropertyProtectionChecker';
+
+    public function shouldBeProtected($item): bool
     {
         return $item->isProtected();
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
     }
 }

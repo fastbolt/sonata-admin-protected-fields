@@ -6,19 +6,19 @@ use Fastbolt\SonataAdminProtectedFields\Exception\CheckerNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Form\FormFieldProvider;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
 use Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker;
-use Sonata\AdminBundle\Mapper\MapperInterface;
+use Sonata\AdminBundle\Form\FormMapper;
 
 class DefaultProtector
 {
     /**
-     * @var array<class-string,Checker>
+     * @var array<string,Checker>
      */
     private array $checkers = [];
 
     private FormFieldProvider $formFieldProvider;
 
     /**
-     * @param array<class-string,Checker> $checkers
+     * @param array<string,Checker> $checkers
      */
     public function __construct(
         FormFieldProvider $fieldProvider,
@@ -27,11 +27,11 @@ class DefaultProtector
         $this->formFieldProvider = $fieldProvider;
 
         foreach ($checkers as $checker) {
-            $this->checkers[$checker::class] = $checker;
+            $this->checkers[$checker->getName()] = $checker;
         }
     }
 
-    public function protectForm(MapperInterface $mapper, iterable $protectedFields, object $object): void
+    public function protectForm(FormMapper $mapper, iterable $protectedFields, object $object): void
     {
         foreach ($protectedFields as $fieldName => $configuration) {
             $this->protectField($mapper, $fieldName, $configuration, $object);
@@ -39,7 +39,7 @@ class DefaultProtector
     }
 
     private function protectField(
-        MapperInterface $mapper,
+        FormMapper $mapper,
         string $fieldName,
         WriteProtected $writeProtected,
         object $object

@@ -4,6 +4,7 @@ namespace Fastbolt\SonataAdminProtectedFields\Mapping\Driver;
 
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\DeleteProtected;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
+use ReflectionAttribute;
 use ReflectionClass;
 
 class AttributeDriver
@@ -29,7 +30,7 @@ class AttributeDriver
                 continue;
             }
             $name = $property->getName();
-            /** @var \ReflectionAttribute $attr */
+            /** @var ReflectionAttribute $attr */
             $attr = end($attributes);
 
             $protectedFields[$name] = $attr->newInstance();

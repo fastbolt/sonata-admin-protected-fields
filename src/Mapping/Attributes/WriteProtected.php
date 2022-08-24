@@ -9,7 +9,7 @@ use Fastbolt\SonataAdminProtectedFields\Protection\Checker\PropertyProtectionChe
 class WriteProtected
 {
     public function __construct(
-        private string $checker = PropertyProtectionChecker::class,
+        private string $checker = PropertyProtectionChecker::NAME,
         private bool $throwOnMissing = true
     ) {
     }

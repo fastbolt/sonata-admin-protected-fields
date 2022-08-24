@@ -5,12 +5,14 @@ namespace Fastbolt\SonataAdminProtectedFields\Tests\Unit\EventSubscriber;
 use Fastbolt\SonataAdminProtectedFields\EventSubscriber\FormProtectingEventSubscriber;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver;
 use Fastbolt\SonataAdminProtectedFields\Protection\DefaultProtector;
-use Fastbolt\SonataAdminProtectedFields\Tests\Unit\_fixtures\DummyType;
 use Fastbolt\TestHelpers\BaseTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Builder\FormContractorInterface;
 use Sonata\AdminBundle\Event\ConfigureEvent;
-use Sonata\AdminBundle\Mapper\MapperInterface;
+use Sonata\AdminBundle\Form\FormMapper;
+use stdClass;
+use Symfony\Component\Form\FormBuilder;
 
 /**
  * @covers \Fastbolt\SonataAdminProtectedFields\EventSubscriber\FormProtectingEventSubscriber
@@ -28,14 +30,14 @@ class FormProtectingEventSubscriberTest extends BaseTestCase
     private $protector;
 
     /**
-     * @var MapperInterface&MockObject
-     */
-    private $mapper;
-
-    /**
      * @var AbstractAdmin&MockObject
      */
     private $admin;
+
+    /**
+     * @var FormContractorInterface&MockObject
+     */
+    private $formContractor;
 
     public function testGetSubscribedEvents(): void
     {
@@ -49,19 +51,22 @@ class FormProtectingEventSubscriberTest extends BaseTestCase
 
     public function testConfigureForm(): void
     {
-        $event      = new ConfigureEvent($this->admin, $this->mapper, '\App\Foo\BarAdmin');
+        $mapper     = new FormMapper($this->formContractor, $this->builder, $this->admin);
+        $event      = new ConfigureEvent($this->admin, $mapper, '\App\Foo\BarAdmin');
         $subscriber = new FormProtectingEventSubscriber($this->driver, $this->protector);
-        $subject    = new DummyType(false);
-        $this->admin->setModelClass(DummyType::class);
+        $subject    = $this->getMock(stdClass::class, [], ['isProtected'], 'fooBarType');
+        $subject->method('isProtected')
+                ->willReturn(false);
+        $this->admin->setModelClass('fooBarType');
         $this->admin->setSubject($subject);
         $this->driver->expects(self::once())
                      ->method('getProtectedFields')
-                     ->with(DummyType::class)
+                     ->with('fooBarType')
                      ->willReturn($fields = ['foo', 'bar']);
 
         $this->protector->expects(self::once())
                         ->method('protectForm')
-                        ->with($this->mapper, $fields, $subject);
+                        ->with($mapper, $fields, $subject);
 
         $subscriber->configureForm($event);
     }
@@ -70,9 +75,10 @@ class FormProtectingEventSubscriberTest extends BaseTestCase
     {
         parent::setUp();
 
-        $this->driver    = $this->getMock(AttributeDriver::class);
-        $this->protector = $this->getMock(DefaultProtector::class);
-        $this->mapper    = $this->getMock(MapperInterface::class);
-        $this->admin     = $this->getMock(AbstractAdmin::class);
+        $this->driver         = $this->getMock(AttributeDriver::class);
+        $this->protector      = $this->getMock(DefaultProtector::class);
+        $this->admin          = $this->getMock(AbstractAdmin::class);
+        $this->builder        = $this->getMock(FormBuilder::class);
+        $this->formContractor = $this->getMock(FormContractorInterface::class);
     }
 }

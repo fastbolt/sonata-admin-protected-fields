@@ -4,22 +4,17 @@ namespace Fastbolt\SonataAdminProtectedFields\Form;
 
 use Fastbolt\SonataAdminProtectedFields\Exception\FieldNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Attributes\WriteProtected;
-use Sonata\AdminBundle\Mapper\MapperInterface;
+use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FormFieldProvider
 {
-
     public function getFormField(
-        MapperInterface $mapper,
+        FormMapper $mapper,
         string $fieldName,
         WriteProtected $writeProtected
     ): ?FormBuilderInterface {
-        if ($mapper->has($fieldName)) {
-            return $mapper->get($fieldName);
-        }
-
         if (null !== ($field = $this->getFieldDefinition($mapper, $fieldName))) {
             return $field;
         }
@@ -29,17 +24,23 @@ class FormFieldProvider
         }
 
         $modelClass = $mapper->getAdmin()
-                             ->getModelClass();
+                             ->getClass();
 
         throw FieldNotFoundException::create($fieldName, $modelClass);
     }
 
-    private function getFieldDefinition(MapperInterface $mapper, string $fieldName): ?FormBuilderInterface
+    private function getFieldDefinition(FormMapper $mapper, string $fieldName): ?FormBuilderInterface
     {
+        if ($mapper->has($fieldName)) {
+            return $mapper->get($fieldName);
+        }
+
+        // We MUST NOT use FormMapperInterface::getAdmin()::getFormBuilder() here, otherwise
+        // we'll end up in recursion.
         $fields = $mapper->getFormBuilder()
                          ->all();
 
-        $fieldsFiltered = array_filter($fields, static function (FormBuilder $field) use ($fieldName) {
+        $fieldsFiltered = array_filter($fields, static function (FormBuilderInterface $field) use ($fieldName) {
             return 0 === stripos($field->getName(), $fieldName);
         });
 

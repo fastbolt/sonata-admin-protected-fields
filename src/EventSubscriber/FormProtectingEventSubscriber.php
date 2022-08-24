@@ -5,7 +5,6 @@ namespace Fastbolt\SonataAdminProtectedFields\EventSubscriber;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver;
 use Fastbolt\SonataAdminProtectedFields\Protection\DefaultProtector;
 use Sonata\AdminBundle\Event\ConfigureEvent;
-use Sonata\AdminBundle\Form\FormMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FormProtectingEventSubscriber implements EventSubscriberInterface

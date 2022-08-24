@@ -6,26 +6,25 @@ use Fastbolt\SonataAdminProtectedFields\Exception\CheckerNotFoundException;
 use Fastbolt\SonataAdminProtectedFields\Mapping\Driver\AttributeDriver;
 use Fastbolt\SonataAdminProtectedFields\Protection\Checker\Checker;
 use Sonata\AdminBundle\Admin\AdminInterface;
-use Sonata\AdminBundle\Security\Handler\RoleSecurityHandler;
 use Sonata\AdminBundle\Security\Handler\SecurityHandlerInterface;
 
 class ProtectingSecurityHandler implements SecurityHandlerInterface
 {
 
-    private RoleSecurityHandler $parent;
+    private SecurityHandlerInterface $parent;
 
     private AttributeDriver $driver;
 
     /**
-     * @var array<class-string,Checker>
+     * @var array<string,Checker>
      */
     private array $checkers = [];
 
     /**
-     * @param array<class-string,Checker> $checkers
+     * @param array<string,Checker> $checkers
      */
     public function __construct(
-        RoleSecurityHandler $parent,
+        SecurityHandlerInterface $parent,
         AttributeDriver $driver,
         array $checkers
     ) {
@@ -33,22 +32,22 @@ class ProtectingSecurityHandler implements SecurityHandlerInterface
         $this->driver = $driver;
 
         foreach ($checkers as $checker) {
-            $this->checkers[$checker::class] = $checker;
+            $this->checkers[$checker->getName()] = $checker;
         }
     }
 
     public function isGranted(AdminInterface $admin, $attributes, ?object $object = null): bool
     {
-        if (!$this->parent->isGranted($admin, $attributes, $object)) {
+        if (false === ($parentGranted = $this->parent->isGranted($admin, $attributes, $object))) {
             return false;
         }
 
         if (!is_object($object) || $attributes !== 'DELETE') {
-            return $this->parent->isGranted($admin, $attributes, $object);
+            return $parentGranted;
         }
 
         if (null === ($deleteProtected = $this->driver->getDeleteProtection($object::class))) {
-            return $this->parent->isGranted($admin, $attributes, $object);
+            return $parentGranted;
         }
 
         $checkerName = $deleteProtected->getChecker();
