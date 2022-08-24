@@ -6,7 +6,7 @@
 [![Type Coverage](https://shepherd.dev/github/fastbolt/sonata-admin-protected-fields/coverage.svg)](https://shepherd.dev/github/fastbolt/sonata-admin-protected-fields)
 [![Psalm Level](https://shepherd.dev/github/fastbolt/sonata-admin-protected-fields/level.svg)](https://shepherd.dev/github/fastbolt/sonata-admin-protected-fields)
 
-[![Github Build](https://img.shields.io/github/workflow/status/fastbolt/sonata-admin-protected-fields/CI/main)](https://github.com/fastbolt/sonata-admin-protected-fields/actions)
+[![GitHub](https://img.shields.io/github/workflow/status/fastbolt/sonata-admin-protected-fields/PHPUnit%20tests/main?label=Tests)](https://github.com/fastbolt/sonata-admin-protected-fields/actions)
 
 # Field and Entity protection for sonata admin
 
